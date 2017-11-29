@@ -30,22 +30,24 @@ class Game
     play_again
   end
 
+  #reset @turns and @success if user plays again
   def play_again
     puts "\n Would you like to play again? type 'yes' or 'no'"
     user_input = gets.chomp.downcase
     if user_input == 'yes'
       print "let's play!"
       @turns = 1
+      @success = false
       start_game
     elsif user_input == 'no'
-        print "That's cool. Hope you had fun"
+        print "That's cool. Hope you had fun\n\n"
         exit
     else
-      print "I didnt quite catch that."
+      print "I didnt quite catch that.\n"
       play_again
     end
   end
-
+#game loop
   def play_round
     loop do
       ask_for_guess
@@ -63,6 +65,8 @@ class Game
     puts @active_player ? "\nPlease guess the code: " : "\nComputer is guessing... "
   end
 
+  #when refactoring i should validate the guess using the same code that
+  #validates player_secret_code in code_setter.rb
   def get_player_guess
     guess = gets.chomp.split("").map(&:to_i)
     if (guess.length == 4) && (guess.all?{|e| (1..6).include?(e)}) && (guess.all?{|e| e.class == Fixnum})
