@@ -1,10 +1,11 @@
 class CodeSetter
   attr_accessor :secret_code
-
+  #active_player determines whether user or computer creates the secret_code
   def initialize(active_player)
     active_player ? @secret_code = create_secret_code : @secret_code = get_player_secret_code
   end
 
+  #get code in array form, easier to work with
   def get_player_secret_code
     puts "\n\nplease enter your four-digit secret code."
     puts "Any combination of digits from 1-6. You can have duplicates"
@@ -24,7 +25,7 @@ class CodeSetter
    end
    return user_secret_code
   end
-
+  #player_secret_code meets requirements
   def validity(user_input)
   return false if user_input.length != 4
   return false if !user_input.all?{|element| element.class == Fixnum}
