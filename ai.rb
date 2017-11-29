@@ -43,7 +43,7 @@ class AiPlayer
 
   def evaluate(guess, answer)
     feedback = [" ", " ", " ", " "]
-    # Duplicate temp_code so it doesn't point directly to @code (destructive)
+    # Duplicate temp_code so it doesn't point directly to answer(destructive)
     temp_code = answer.dup
 
     # Correct color and position = 1
