@@ -75,7 +75,8 @@ class Game
   end
 
   def get_computer_guess
-    @computer.get_guess(@board.display_secret_code)
+    feedback = @computer.get_guess
+    @computer.update_feedback(feedback) if @success == false
   end
 
   def select_game_type
