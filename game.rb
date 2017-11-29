@@ -26,7 +26,7 @@ class Game
     play_again
   end
   def failure_message
-    puts @active_player ?  "\nYou failed to crack the code. I gave you 12 tries dude, wth?" : "I aint even trying to write a failure message for the computer coz its definitely gonna win"
+    puts @active_player ?  "\nYou failed to crack the code? it was '#{@board.display_secret_code}'. I gave you 12 tries dude, wth?" : "I aint even trying to write a failure message for the computer coz its definitely gonna win"
     play_again
   end
 
@@ -35,6 +35,7 @@ class Game
     user_input = gets.chomp.downcase
     if user_input == 'yes'
       print "let's play!"
+      @turns = 1
       start_game
     elsif user_input == 'no'
         print "That's cool. Hope you had fun"
@@ -74,7 +75,7 @@ class Game
   end
 
   def get_computer_guess
-    @computer.guess
+    @computer.get_guess(@board.display_secret_code)
   end
 
   def select_game_type

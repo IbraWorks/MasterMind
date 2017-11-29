@@ -5,7 +5,7 @@ class Board
 
   def initialize(active_player)
     #create secret code, attempt counter, and gameboard
-    @secret_code = CodeSetter.new(active_player)
+    @code_setter = CodeSetter.new(active_player)
     @attempt_number = 0
     @gameboard = create_gameboard
   end
@@ -43,27 +43,33 @@ class Board
 
   def update_gameboard(guess)
     @gameboard[@attempt_number][0] = guess
-    @gameboard[@attempt_number][1] = get_feedback(guess).map { |e| colorize(e) }
+    @gameboard[@attempt_number][1] = get_feedback(guess,display_secret_code).map { |e| colorize(e) }
     @attempt_number += 1
   end
 
   #will be used to check for success
   def code_cracked?(guess)
-    guess == @secret_code ? true : false
+    guess == @code_setter.secret_code ? true : false
   end
 
-  def get_feedback(guess)
+  def display_secret_code
+    @code_setter.secret_code
+  end
+
+  def get_feedback(guess, solution)
     #correct_position is correct colour and position
     #checked is an array used to ensure that false-positive duplicates
     #do not occur. i.e if code is [1,1,2,3] and user enters [1,1,2,1]
     #the feedback should suggest correct_position = 3 AND misplaced_colour = 0
+    temp_code = solution.dup
     correct_position = 0
     misplaced_colour = 0
     checked = []
     feedback = []
 
+
     guess.each_with_index do |gcolour, gindex|
-      if gcolour == @secret_code[gindex]
+      if gcolour == temp_code[gindex]
         correct_position += 1
         if checked[gindex] == gcolour
           misplaced_colour -= 1
@@ -71,8 +77,8 @@ class Board
           checked[gindex] = gcolour
         end
       else
-        @secret_code.each_with_index do |ccolour, cindex|
-          if gcolour == ccolour && gcolour != @secret_code[gindex] && checked[cindex] != ccolour
+        temp_code.each_with_index do |ccolour, cindex|
+          if gcolour == ccolour && gcolour != temp_code[gindex] && checked[cindex] != ccolour
             misplaced_colour += 1
             checked[cindex] = ccolour
           end
