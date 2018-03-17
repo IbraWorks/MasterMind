@@ -1,3 +1,28 @@
+Mastermind
+---------------------
+<img src ="images/mastermind.png" width="500">
+
+This is an implementation of the Mastermind board game, complete with an ai
+opponent that will always win in a maximum of 5 turns (using Knuth's algorithm).
+The player can choose to be the code-guesser or the code-creator.
+
+Update:
+This was not built using the TDD mantra as I hadn't learned about testing at the
+time. However, the game still works.
+
+Installation
+---------------------
+With Ruby (and a bundler) installed, open the command line, navigate to where you want to store
+the file and enter the following in your terminal/command-line:
+```
+$ git clone https://github.com/IvyMic/MasterMind.git
+$ cd MasterMind
+$ bundle install
+$ ruby mastermind.rb
+
+```
+
+
 Pre thoughts
 ---------------------
 
@@ -28,12 +53,13 @@ and the code should take that into account. Also, to represent
 the colours, I decided to ask the user for input based on spelling of the colours.
 So the user would input "white" if they thought the secret code featured a
 "white" entry. Having finished the main game I realised that this was a bad idea,
-especially considering how I wanted to implement the ai.
+especially considering how I wanted to implement the ai (I left the resulting
+code in the mastermind_first_try.rb file for reference).
 
 Creating the secret code in this way caused multiple issues:
 
   - Creating the game board. "black" and "white" have 5 characters each but "blue"
-    has 4 and "red" has three. This made creating a visual board on command line
+    has 4 and "red" has 3. This made creating a visual board on command line
     neatly cumbersome because of the differences in character length
   - The method of attack for the ai involved some game theory and a use of knuth's
     algorithm, which in turn meant the use of some maths. Can't do maths on words
